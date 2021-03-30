@@ -56,11 +56,10 @@ const Block = ({ args, color, ...props }) => {
   )
 };
 
-const Piece = ({args, color}) => {
+const Piece = ({args, color, ...props}) => {
 
-  const box = useRef();
-  const [position, setPosition] = useState([0, 0, 0]);
-  const [ref, api] = useBox(() => ({mass: 0}))
+  const [position] = useState([0, 0, 0]);
+  const [ref, api] = useBox(() => ({mass: 0, ...props}))
   const { size, viewport } = useThree();
   const aspect = size.width / viewport.width;
   const drag = useDrag(({ offset:[x, y] }) => {
@@ -70,9 +69,9 @@ const Piece = ({args, color}) => {
 
   return (
     <>
-    <mesh ref={ref} {...drag()}>
+    <mesh ref={ref} {...drag()} >
       <boxBufferGeometry args={args} />
-      <meshStandardMaterial color={color}/>
+      <meshStandardMaterial color={color} />
     </mesh>
     </>
   )
@@ -92,8 +91,8 @@ export default function App() {
         <Ball />
         <Paddle args={[2, 0.5, 1]} color='green'/>
         <Block color='orange' args={[2, 0.5, 1]} position={[5, 5, 0]} />
-        <Piece args={[4, 1, 1]} color='blue'/>
-        <Piece args={[1, 1, 1]} color='red'/>
+        <Piece args={[4, 1, 1]} color='blue' position={[5, 5, 0]}/>
+        <Piece args={[1, 1, 1]} color='red' position={[5, 5, 0]}/>
       </Physics>
   </Canvas>
   )
