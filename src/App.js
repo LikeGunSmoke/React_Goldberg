@@ -150,12 +150,12 @@ export default function App() {
         <Paddle args={[2, 0.5, 1]} color='green'/>
         <Block color='yellow' args={[1, 2, 1]} position={[-5.5, 2.55, 0]} />
         <Block color='yellow' args={[2, 0.5, 1]} position={[-7, 1.8, 0]} />
-        <Block color='purple' args={[2, 0.5, 1]} position={[-4, 4, 0]} />
-        <Block color='purple' args={[2, 0.5, 1]} position={[0, 4, 0]} />
-        <SpinBlock color='blue' args={[1, 1, 1]} position={[-2, 4, 0]} />
-        <SlideBlock color='red' args={[0.5, 0.5, 0.5]} position={[0, 0, 0]} />
-        <Piece dim={[4, 2, 1]} args={[4, 2, 1]} color='blue' position={[5, 5, 0]}/>
-        <Piece dim={[1, 1, 1]} args={[1, 1, 1]} color='red' position={[5, -5, 0]}/>
+        <Block color='yellow' args={[2, 0.5, 1]} position={[-4, 4, 0]} />
+        <Block color='yellow' args={[2, 0.5, 1]} position={[0, 4, 0]} />
+        <SpinBlock color='purple' args={[1, 1, 1]} position={[-2, 4, 0]} />
+        <SlideBlock color='purple' args={[0.75, 0.75, 0.75]} position={[0, 0, 0]} />
+        <Piece dim={[2, 1, 1]} args={[4, 2, 1]} color='blue' position={[5, 5, 0]}/>
+        <Piece dim={[1, 1, 1]} args={[1, 1, 1]} color='blue' position={[5, -5, 0]}/>
       </Physics>
   </Canvas>
   )

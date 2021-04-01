@@ -1,8 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { Canvas, useThree, useFrame, extend } from 'react-three-fiber';
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import App from './App.js';
+//import Logo from './Logo.js';
 
 import axios from 'axios';
+//import font from '../assets/font.json';
+import font from 'three/examples/fonts/helvetiker_regular.typeface.json'
+
+extend({ OrbitControls });
+
+const OControls = () => {
+  const orbitRef = useRef();
+  const { camera, gl } = useThree();
+
+  useFrame(() => {
+    orbitRef.current.update();
+  });
+
+  return (
+    <orbitControls
+    // takes camera and dom element
+    ref={orbitRef}
+    args={[camera, gl.domElement]}
+    // "clamps" rotation axis (can't go up/down)
+    // maxPolarAngle={Math.PI / 3}
+    // minPolarAngle={Math.PI / 3}
+    />
+  )
+}
+const Plane = () => {
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -10, 0]} receiveShadow >
+      <planeBufferGeometry attach='geometry' args={[100, 100]} />
+      <meshPhysicalMaterial attach='material' color='grey' />
+    </mesh>
+  )
+}
+
+const Logo = () => {
+  const ref = useRef();
+  const text = new THREE.FontLoader().parse(font);
+  let options = {
+    font: text,
+    size: 2,
+    height: 1,
+  }
+
+  return (
+    <Canvas style={{height: '50%', width: '50%'}} camera={{position: [0,0,5], fov: 100}}>
+      <OControls />
+      <Plane />
+      <ambientLight intensity={0.5}/>
+      <spotLight penumbra={1} position={[0, 8, 10]} castShadow />
+      <mesh position={[-8, 0, 0]}  ref={ref} castShadow >
+        <textGeometry  attach='geometry' args={['React Goldberg', options]} />
+        <meshPhongMaterial metalness={5} color='#FFD700' attach='material' />
+      </mesh>
+    </Canvas>
+  )
+}
 
 class Login extends Component {
   constructor(props) {
@@ -58,8 +117,11 @@ class Login extends Component {
   render() {
     if (!this.state.loggedIn) {
     return (
+      <>
+
+      <Logo />
+
       <div>
-      <h1>React Goldberg</h1>
       <form>
         <input
         name='username'
@@ -79,6 +141,7 @@ class Login extends Component {
       <button onClick={this.handleLogin} type='submit'>Login</button>
       <button onClick={this.handleJoin} type='submit'>Join</button>
     </div>
+    </>
     )
   } else {
     return <App />
