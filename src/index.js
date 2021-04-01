@@ -4,7 +4,6 @@ import { Canvas, useThree, useFrame, extend } from 'react-three-fiber';
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import App from './App.js';
-//import Logo from './Logo.js';
 
 import axios from 'axios';
 //import font from '../assets/font.json';

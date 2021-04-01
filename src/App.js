@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Suspense } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from 'react-three-fiber';
 import { Physics, useSphere, useBox, usePlane } from 'use-cannon';
 import { useDrag, useGesture } from 'react-use-gesture';
 import * as THREE from 'three'
-
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import '../styles.css';
+
 
 const Ball = ({args = [0.25, 32, 32], ...props}) => {
   const [ref, api] = useSphere(() => ({args: 0.25, mass: 1, position: [5, 0, 0]}))
@@ -135,6 +136,20 @@ const Background = () => {
   return null;
 }
 
+// Currently doesn't work, unable to glb or gltf... Research!!!
+const  Thwomp = () => {
+  const { nodes } = useLoader(GLTFLoader, '/React_Goldberg/assets/st-class-glb/source/st_class.glb');
+  return (
+    <group>
+      <mesh visible geometry={nodes.Default.geometry}>
+        <meshStandardMaterial
+          attach="material"
+        />
+      </mesh>
+    </group>
+  );
+}
+
 
 export default function App() {
   return (
@@ -146,6 +161,7 @@ export default function App() {
         defaultContactMaterial={{restitution: 1.1}}
       >
         <Background />
+
         <Ball position={[-7, 2.5, 0]}/>
         <Paddle args={[2, 0.5, 1]} color='green'/>
         <Block color='yellow' args={[1, 2, 1]} position={[-5.5, 2.55, 0]} />
@@ -163,6 +179,8 @@ export default function App() {
 
 
 /* NOTES:
+
+  If local files won't run run this in a seperate terminal: /Users/robertstrange/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --allow-file-access-from-files
 
   CubeTextureLoader: images MUST be square (ie: 600 x 600 pixels/in/cm etc...)
 
