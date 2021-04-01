@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Canvas, useFrame, useThree } from 'react-three-fiber';
+import { Canvas, useFrame, useThree, useLoader } from 'react-three-fiber';
 import { Physics, useSphere, useBox, usePlane } from 'use-cannon';
 import { useDrag, useGesture } from 'react-use-gesture';
 import * as THREE from 'three'
@@ -94,7 +94,6 @@ const SlideBlock = ({ args, color, ...props }) => {
 
   const {viewport} = useThree();
   const [ref, api] = useBox(() => ({args, ...props}));
-  // const clock = new THREE.Clock();
 
   useFrame(({ clock }) => api.position.set(Math.sin(clock.getElapsedTime()) * 5, 0, 0))
 
@@ -121,6 +120,21 @@ const SpinBlock = ({ args, color, ...props }) => {
   )
 };
 
+const Background = () => {
+  const { scene } = useThree();
+  const loader = new THREE.CubeTextureLoader();
+  const texture = loader.load([
+    "http://localhost:3000/api/forestSide.jpg",
+    "http://localhost:3000/api/forestSide.jpg",
+    "http://localhost:3000/api/forestSide.jpg",
+    "http://localhost:3000/api/forestSide.jpg",
+    "http://localhost:3000/api/forestSide.jpg",
+    "http://localhost:3000/api/forestSide.jpg",
+  ])
+  scene.background = texture;
+  return null;
+}
+
 
 export default function App() {
   return (
@@ -131,7 +145,8 @@ export default function App() {
       <Physics gravity={[0, -30, 0]}
         defaultContactMaterial={{restitution: 1.1}}
       >
-        <Ball position={[[-7, 2.5, 0]]}/>
+        <Background />
+        <Ball position={[-7, 2.5, 0]}/>
         <Paddle args={[2, 0.5, 1]} color='green'/>
         <Block color='yellow' args={[1, 2, 1]} position={[-5.5, 2.55, 0]} />
         <Block color='yellow' args={[2, 0.5, 1]} position={[-7, 1.8, 0]} />
@@ -148,6 +163,9 @@ export default function App() {
 
 
 /* NOTES:
+
+  CubeTextureLoader: images MUST be square (ie: 600 x 600 pixels/in/cm etc...)
+
   Removed Geometry (as m) and Face3 (as y) from use-cannon node modules, import error
 
 */

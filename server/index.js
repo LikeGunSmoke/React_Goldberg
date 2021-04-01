@@ -14,10 +14,10 @@ app.get('/api/users/', (req, res) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      res.status(200).send(data)
+      res.status(200).send(data);
     }
   });
-})
+});
 
 app.post('/api/users', (req, res) => {
   let username = req.body.username;
@@ -31,6 +31,10 @@ app.post('/api/users', (req, res) => {
   })
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port: ${port}`)
+app.get('/api/forestSide.jpg', (req, res) => {
+    res.sendFile('forestMain.jpeg', {root: __dirname});
 })
+
+app.listen(port, () => {
+  console.log(`Server listening on port: ${port}`);
+});
