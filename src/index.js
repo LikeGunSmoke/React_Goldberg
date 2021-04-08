@@ -1,9 +1,24 @@
-import React, { Component, useRef } from 'react';
+import React, { Component, useRef, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Canvas, useThree, useFrame, extend } from 'react-three-fiber';
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import App from './App.js';
+
+// TESTING ZONE
+import Moonrise from './Moonrise.js';
+import Sunrise from './Sunrise.js';
+
+import Drum from './Drum.js';
+import Cymbal from './Cymbal.js';
+import Guitar from './Guitar.js';
+
+// import DrumKit from './DrumKit'; // works, lotta meshes to sort through...
+
+//import SpaceBuddy from './SpaceBuddy.js';
+
+// -------------------------------------------------------------
+
 
 import axios from 'axios';
 //import font from '../assets/font.json';
@@ -117,9 +132,7 @@ class Login extends Component {
     if (!this.state.loggedIn) {
     return (
       <>
-
       <Logo />
-
       <div>
       <form>
         <input
@@ -143,10 +156,23 @@ class Login extends Component {
     </>
     )
   } else {
-    return <App />
+    return (
+    <Canvas pixelRatio={[1, 2]} camera={{position: [0, 0, 5]}} >
+      <OControls />
+      <Plane />
+      <ambientLight intensity={0.3}/>
+      <pointLight position={[0,0,0]} />
+      <Suspense fallback={null}>
+        <Guitar position={[-25,10,-15]} scale={[5, 5, 5]}/>
+        <Drum position={[0,0,0]} scale={[0.2, 0.2, 0.2]}/>
+        <Cymbal position={[-15,15,25]} scale={[80, 80, 80]}/>
+      </Suspense>
+    </Canvas>
+    )
   }
  }
 };
 
 export default Login;
+
 ReactDOM.render(<Login/>, document.getElementById('root'));
