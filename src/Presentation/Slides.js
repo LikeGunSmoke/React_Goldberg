@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Carousel from "react-spring-3d-carousel";
 import { config } from "react-spring";
 import styled from 'styled-components';
+import { Wave } from 'react-animated-text';
 
 import slide from '../../assets/slide.jpeg';
 
@@ -15,27 +16,67 @@ const Slides = () => {
        <Cont>
          <Title>What is it?</Title>
          <ul>
-           <List>Three.js renderer</List><br></br>
-           <List>Sets the scene for 3D models</List><br></br>
-           <List>Can do everything Three.js</List>
+           <List>
+             <Wave
+                  text='Three.js renderer made by Paul Henschel'
+                  iterations={1}
+                  speed={20}
+                 />
+           </List><br></br>
+           <List>
+           <Wave
+                  text='Sets the scene for 3D models'
+                  iterations={1}
+                  speed={20}
+                 /></List><br></br>
+           <List>
+           <Wave
+                  text='Can do everything Three.js'
+                  iterations={1}
+                  speed={20}
+                 /></List>
          </ul>
        </Cont>
     }, {key: 2, content:
        <Cont>
          <Title>The Good</Title>
          <ul>
-           <List>Part of the React eco-system</List><br></br>
-           <List>Easy to re-use components</List><br></br>
-           <List>A ton of fun libraries to incorporate</List>
+           <List>           <Wave
+                  text='Part of the React eco-system'
+                  iterations={1}
+                  speed={20}
+                 /></List><br></br>
+           <List>           <Wave
+                  text='Easy to re-use components'
+                  iterations={1}
+                  speed={20}
+                 /></List><br></br>
+           <List>           <Wave
+                  text='A ton of fun libraries to incorporate'
+                  iterations={1}
+                  speed={20}
+                 /></List>
          </ul>
        </Cont>
     }, {key: 3, content:
        <Cont>
          <Title>The Bad</Title>
          <ul>
-           <List>High upfront learning cost</List><br></br>
-           <List>Sparse documentation!</List><br></br>
-           <List>Limited examples (compared to Three.js)</List>
+           <List>           <Wave
+                  text='High upfront learning cost'
+                  iterations={1}
+                  speed={20}
+                 /></List><br></br>
+           <List>           <Wave
+                  text='Sparse documentation!'
+                  iterations={1}
+                  speed={20}
+                 /></List><br></br>
+           <List>           <Wave
+                  text='Limited examples (compared to Three.js)'
+                  iterations={1}
+                  speed={20}
+                 /></List>
          </ul>
        </Cont>
      },
@@ -44,7 +85,7 @@ const Slides = () => {
   });
 
   return (
-    <Carousel
+    <Carousel style={{overflow: 'hidden', background: 'transparent'}}
     slides={slideDeck}
     goToSlide={slide}
     offsetRadius={offset}
@@ -57,7 +98,7 @@ const Title = styled.h3`
   font-family: Arial, avenier;
   color: white;
   text-align: center;
-  margin-top: 25%;
+  margin-top: 10%;
 `;
 const List = styled.li`
  font-family: Arial, avenier;

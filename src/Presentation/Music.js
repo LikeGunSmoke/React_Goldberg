@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import { Canvas, useThree, useFrame, extend } from 'react-three-fiber';
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 import styled from 'styled-components';
 import { HiCubeTransparent } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { Wave } from 'react-animated-text';
+
 import Drum from '../Drum.js';
 import Cymbal from '../Cymbal.js';
 import Guitar from '../Guitar.js';
@@ -39,13 +42,24 @@ const Plane = () => {
   )
 }
 
+const text = [
+`<Canvas style={{height: '65vh', width: '100vw'}} pixelRatio={[1, 2]} camera={{position: [0, 0, 5]}} >`,
+  `  <color attach='background' args={['lightblue']} />`,
+    `  <OControls />`,
+    `  <Plane />`,
+    `  <ambientLight intensity={0.3}/>`,
+    `  <pointLight position={[0,0,0]} />`,
+    `  <Suspense fallback={null}>`,
+      `    <Guitar position={[-25,10,-15]} scale={[5, 5, 5]}/>`,
+      `    <Drum position={[0,0,0]} scale={[0.2, 0.2, 0.2]}/>`,
+      `    <Cymbal position={[-15,15,25]} scale={[80, 80, 80]}/>`,
+    `  </Suspense>`,
+  `</Canvas>`,
+];
+
 const Music = () => {
 
   const [how, setHow] = useState(false);
-
-  useEffect(() => {
-    document.body.style = 'background: grey';
-  });
 
   return (
     <>
@@ -70,20 +84,9 @@ const Music = () => {
           ><HiCubeTransparent style={{height: '40px', width: '40px'}}/><br></br>So How Does it Work?</Btn>
           </BtnCont>
          : <Cont>
-             <Par>
-              Canvas <br></br>
-
-                OControls <br></br>
-                Plane <br></br>
-                ambientLight intensity=0.3 <br></br>
-                pointLight args=[0,0,0]<br></br>
-                Suspense fallback=null<br></br>
-                   Guitar position=[-25,10,-15] scale=[5, 5, 5]/><br></br>
-                   Drum position=[0,0,0]} scale=[0.2, 0.2, 0.2]/><br></br>
-                   Cymbal position=[-15,15,25] scale=[80, 80, 80]/><br></br>
-                Suspense<br></br>
-               Canvas
-            </Par>
+           <Par>
+             {text.map((t, i) => <Wave text={t} iterations={1} speed={20} key={i}/>)}
+           </Par>
            <IoIosCloseCircleOutline style={{height: '25px', width: '25px', borderRadius: '50%', backgroundColor: 'white'}}
            type='submit' value='Submit' onClick={() => setHow(!how)}/>
            </Cont>
@@ -91,10 +94,11 @@ const Music = () => {
     </>
     )
 }
-{/* <button type='submit' value='Submit' onClick={() => setHow(!how)}></button> */}
+
 const Par = styled.p`
  font-family: Arial, avenier;
- text-align: center;
+ margin-left: 30%;
+ text-align: left;
  color: white;
  font-size: 1em;
 `
@@ -124,7 +128,6 @@ const BtnCont = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: grey;
 `;
 
 export default Music;

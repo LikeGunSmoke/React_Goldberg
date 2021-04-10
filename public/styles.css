@@ -1,10 +1,14 @@
 html
 
-body
-
-#root {
-  background-color: 'grey';
+body {
+  background: linear-gradient(
+     grey 65%, black 95%, red
+  );
+  height: 100vh;
 }
+
+#root
+
 
 canvas {
   width: 100%;
@@ -15,18 +19,22 @@ canvas {
 
 .slide-enter,
 .slide-exit {
-  transition: transform 1000ms ease-out;
+  transition: transform 2000ms ease-out;
 }
 
-.slide-enter {
+/* .slide-enter {
   transform: translateX(100%);
+} */
+.slide-enter {
+  opacity: 0;
 }
-
-.slide-enter.slide-enter-active {
+/* .slide-enter.slide-enter-active {
   transform: translateX(0%);
+} */
+.slide-enter.slide-enter-active {
+  opacity: 0.5;
 }
-
-.slide-exit {
+/* .slide-exit {
   position: absolute;
   top: 0;
   left: 0;
@@ -36,4 +44,16 @@ canvas {
 
 .slide-exit-active {
   transform: translateX(-100%);
+} */
+
+.slide-exit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+}
+
+.slide-exit-active {
+  opacity: 1;
 }
